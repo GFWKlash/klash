@@ -89,8 +89,6 @@ ecm_setup_version(${KLASH_VERSION}
     VERSION_HEADER "${CMAKE_CURRENT_BINARY_DIR}/klash_version.h"
     )
 
-set(QML_IMPORT_PATH ${CMAKE_SOURCE_DIR}/plugins ${CMAKE_BINARY_DIR}/org CACHE STRING "" FORCE)
-
 add_subdirectory(src)
 
 

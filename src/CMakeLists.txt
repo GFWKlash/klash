@@ -32,7 +32,7 @@ else()
 endif()
 
 if (ANDROID)
-     target_link_libraries(${PROJECT_NAME} Qt5::AndroidExtras Qt5::QuickControls2)
+    target_link_libraries(${PROJECT_NAME} Qt5::AndroidExtras Qt5::QuickControls2)
 elseif(UNIX)
     target_link_libraries(${PROJECT_NAME} Qt5::Widgets)
 endif()
