@@ -1,4 +1,4 @@
-module github.com/Inokinoki/klash/clash
+module github.com/gfwklash/klash/clash
 
 require (
 	github.com/Dreamacro/clash v1.7.2-0.20210930083007-ced9749104e4
