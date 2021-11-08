@@ -18,6 +18,8 @@
 
 #include "../klash_version.h"
 
+#include <clash.h>
+
 #define KLASH_URI "org.maui.klash"
 
 int main(int argc, char *argv[])
