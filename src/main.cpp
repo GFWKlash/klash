@@ -45,7 +45,7 @@ int main(int argc, char *argv[])
     about.addAuthor(i18n("GFWK"), i18n("Developer"), QStringLiteral("gofuwako@gmail.com"));
     about.setHomepage("https://mauikit.org");
     about.setProductName("maui/klash");
-    about.setBugAddress("https://invent.kde.org/maui/klash/-/issues");
+    about.setBugAddress("https://github.com/GFWKlash/klash/issues");
     about.setOrganizationDomain(KLASH_URI);
     about.setProgramLogo(app.windowIcon());
 
