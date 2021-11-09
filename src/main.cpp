@@ -4,6 +4,7 @@
 
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
+#include <QDebug>
 
 #ifdef Q_OS_ANDROID
 #include <QGuiApplication>
@@ -63,8 +64,9 @@ int main(int argc, char *argv[])
     const QStringList args = parser.positionalArguments();
 
     // Init clash core
+    bool clashRunning = false;
     initClashCore();
-    std::cout << "[Clash] Returned " << run(0, 1) << std::endl;
+    // std::cout << "[Clash] Returned " << run(0, 1) << std::endl;
 
     QQmlApplicationEngine engine;
 
@@ -74,6 +76,20 @@ int main(int argc, char *argv[])
 #else
     // Add menus in systray
     QMenu* menu = new QMenu;
+    auto toggleClashCore = menu->addAction(QIcon(":/assets/logo.png"), i18n("Run Clash core"));
+    QObject::connect(toggleClashCore, &QAction::triggered, toggleClashCore, [toggleClashCore, &clashRunning]() {
+        // TODO: Toggle and update state
+        if (clashRunning) {
+            toggleClashCore->setText(i18n("Run Clash"));
+            qDebug() << "Stopping Clash core";
+        } else {
+            toggleClashCore->setText(i18n("Stop Clash"));
+            qDebug() << "Starting Clash core";
+        }
+        clashRunning = !clashRunning;
+    });
+    menu->addSeparator();
+
     auto configure = menu->addAction(QIcon::fromTheme(QStringLiteral("configure")), i18n("Configure..."));
     QObject::connect(configure, &QAction::triggered, configure, [&engine]() {
         const QUrl url(QStringLiteral("qrc:/main.qml"));
