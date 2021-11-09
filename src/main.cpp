@@ -78,8 +78,10 @@ int main(int argc, char *argv[])
     QObject::connect(configure, &QAction::triggered, configure, [&engine]() {
         const QUrl url(QStringLiteral("qrc:/main.qml"));
         engine.load(url);
+        // TODO: How to keep only one instance
     });
     menu->addAction(QIcon::fromTheme(QStringLiteral("application-exit")), i18n("Quit"), [](){qApp->quit();});
+    // TODO: Add profile quick switch
 
     // Set systray
     QSystemTrayIcon systray;
