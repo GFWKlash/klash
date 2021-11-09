@@ -10,6 +10,8 @@
 #include <MauiKit/Core/mauiandroid.h>
 #else
 #include <QApplication>
+#include <QSystemTrayIcon>
+#include <QMenu>
 #endif
 
 #include <MauiKit/Core/mauiapp.h>
@@ -63,7 +65,25 @@ int main(int argc, char *argv[])
     // Init clash core
     initClashCore();
     std::cout << "[Clash] Returned " << run(0, 1) << std::endl;
-    // TODO: daemonize the backend and notifier
+
+    // Daemonize the backend and notifier
+#if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
+    // TODO: On Android we may need a service
+#else
+    // Add menus in systray
+    QMenu* menu = new QMenu;
+    menu->addAction(QIcon::fromTheme(QStringLiteral("application-exit")), i18n("Quit"), [](){qApp->quit();});
+
+    // Set systray
+    QSystemTrayIcon systray;
+    systray.setVisible(true);
+    systray.setToolTip(QStringLiteral("Klash"));
+    systray.setIcon(QIcon(":/assets/logo.png"));
+    systray.setContextMenu(menu);
+
+    // Prevent app from closing
+    app.setQuitOnLastWindowClosed(false);
+#endif
 
     QQmlApplicationEngine engine;
     const QUrl url(QStringLiteral("qrc:/main.qml"));
