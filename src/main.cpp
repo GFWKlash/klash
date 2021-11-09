@@ -36,9 +36,9 @@ int main(int argc, char *argv[])
 #endif
 
     app.setOrganizationName("Maui");
-    app.setWindowIcon(QIcon(":/assets/klash.svg"));
+    app.setWindowIcon(QIcon(":/assets/logo.png"));
 
-    MauiApp::instance ()->setIconName ("qrc:/assets/klash.svg");
+    MauiApp::instance ()->setIconName ("qrc:/assets/logo.png");
 
     KLocalizedString::setApplicationDomain("klash");
     KAboutData about(QStringLiteral("klash"), i18n("Klash"), KLASH_VERSION_STRING, i18n("A Clash frontend."), KAboutLicense::LGPL_V3, i18n("© 2021-%1 Maui Development Team", QString::number(QDate::currentDate().year())), QString(GIT_BRANCH) + "/" + QString(GIT_COMMIT_HASH));
