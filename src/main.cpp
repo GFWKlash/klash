@@ -66,12 +66,19 @@ int main(int argc, char *argv[])
     initClashCore();
     std::cout << "[Clash] Returned " << run(0, 1) << std::endl;
 
+    QQmlApplicationEngine engine;
+
     // Daemonize the backend and notifier
 #if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
     // TODO: On Android we may need a service
 #else
     // Add menus in systray
     QMenu* menu = new QMenu;
+    auto configure = menu->addAction(QIcon::fromTheme(QStringLiteral("configure")), i18n("Configure..."));
+    QObject::connect(configure, &QAction::triggered, configure, [&engine]() {
+        const QUrl url(QStringLiteral("qrc:/main.qml"));
+        engine.load(url);
+    });
     menu->addAction(QIcon::fromTheme(QStringLiteral("application-exit")), i18n("Quit"), [](){qApp->quit();});
 
     // Set systray
@@ -84,11 +91,6 @@ int main(int argc, char *argv[])
     // Prevent app from closing
     app.setQuitOnLastWindowClosed(false);
 #endif
-
-    QQmlApplicationEngine engine;
-    const QUrl url(QStringLiteral("qrc:/main.qml"));
-
-    engine.load(url);
 
     return app.exec();
 }
