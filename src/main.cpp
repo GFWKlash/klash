@@ -19,6 +19,7 @@
 #include "../klash_version.h"
 
 #include <clash.h>
+#include <iostream>
 
 #define KLASH_URI "org.maui.klash"
 
@@ -61,6 +62,8 @@ int main(int argc, char *argv[])
 
     // Init clash core
     initClashCore();
+    std::cout << "[Clash] Returned " << run(0, 1) << std::endl;
+    // TODO: daemonize the backend and notifier
 
     QQmlApplicationEngine engine;
     const QUrl url(QStringLiteral("qrc:/main.qml"));
