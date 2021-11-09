@@ -59,6 +59,9 @@ int main(int argc, char *argv[])
     about.processCommandLine(&parser);
     const QStringList args = parser.positionalArguments();
 
+    // Init clash core
+    initClashCore();
+
     QQmlApplicationEngine engine;
     const QUrl url(QStringLiteral("qrc:/main.qml"));
 

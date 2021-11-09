@@ -42,8 +42,10 @@ target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_SOURCE_DIR}/clash/)
 target_compile_definitions(${PROJECT_NAME}
     PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)
 
-target_link_libraries(${PROJECT_NAME} MauiKit MauiKit::FileBrowsing Qt5::Quick Qt5::Qml KF5::CoreAddons KF5::I18n
-    ${CMAKE_SOURCE_DIR}/clash/clash.a)
+target_link_libraries(${PROJECT_NAME} MauiKit Qt5::Quick Qt5::Qml KF5::CoreAddons KF5::I18n)
+
+# Link to clash
+target_link_libraries(${PROJECT_NAME} ${CMAKE_SOURCE_DIR}/clash/clash.a pthread)
 
 if(UNIX AND NOT APPLE AND NOT ANDROID)
     install(TARGETS ${PROJECT_NAME} ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
