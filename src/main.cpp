@@ -88,21 +88,25 @@ int main(int argc, char *argv[])
         }
         clashRunning = !clashRunning;
     });
+    // TODO: Add profile menu
+    //          - profiles
+    //          - add profile
+    //          - import profile
     menu->addSeparator();
 
-    auto configure = menu->addAction(QIcon::fromTheme(QStringLiteral("configure")), i18n("Configure..."));
+    auto configure = menu->addAction(QIcon::fromTheme("configure"), i18n("Configure..."));
     QObject::connect(configure, &QAction::triggered, configure, [&engine]() {
-        const QUrl url(QStringLiteral("qrc:/main.qml"));
+        const QUrl url("qrc:/main.qml");
         engine.load(url);
         // TODO: How to keep only one instance
     });
-    menu->addAction(QIcon::fromTheme(QStringLiteral("application-exit")), i18n("Quit"), [](){qApp->quit();});
+    menu->addAction(QIcon::fromTheme("application-exit"), i18n("Quit"), [](){qApp->quit();});
     // TODO: Add profile quick switch
 
     // Set systray
     QSystemTrayIcon systray;
     systray.setVisible(true);
-    systray.setToolTip(QStringLiteral("Klash"));
+    systray.setToolTip("Klash");
     systray.setIcon(QIcon(":/assets/logo.png"));
     systray.setContextMenu(menu);
 
