@@ -105,9 +105,9 @@ int main(int argc, char *argv[])
 
     // Set systray
     QSystemTrayIcon systray;
-    systray.setVisible(true);
     systray.setToolTip("Klash");
     systray.setIcon(QIcon(":/assets/logo.png"));
+    systray.setVisible(true);
     systray.setContextMenu(menu);
 
     // Prevent app from closing
