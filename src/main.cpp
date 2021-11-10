@@ -88,10 +88,17 @@ int main(int argc, char *argv[])
         }
         clashRunning = !clashRunning;
     });
+
     // TODO: Add profile menu
     //          - profiles
-    //          - add profile
-    //          - import profile
+    QMenu* profileMenu = menu->addMenu(QIcon::fromTheme("document-preview"), i18n("Profile"));
+    /* auto addProfileAction = */
+    profileMenu->addAction(QIcon::fromTheme("document-new"), i18n("Add"));
+    /* auto importProfileAction = */
+    profileMenu->addAction(QIcon::fromTheme("document-import"), i18n("Import"));
+    profileMenu->addSeparator();
+    // TODO: profiles
+
     menu->addSeparator();
 
     auto configure = menu->addAction(QIcon::fromTheme("configure"), i18n("Configure..."));
