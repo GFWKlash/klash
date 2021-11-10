@@ -24,6 +24,8 @@
 #include <clash.h>
 #include <iostream>
 
+#include <ClashCoreHelper.h>
+
 #define KLASH_URI "org.maui.klash"
 
 int main(int argc, char *argv[])

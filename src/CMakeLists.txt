@@ -5,6 +5,7 @@
 
 set(klash_SRCS
     main.cpp
+    helpers/ClashCoreHelper.cpp
 )
 
 set(klash_ASSETS
@@ -37,7 +38,9 @@ elseif(UNIX)
     target_link_libraries(${PROJECT_NAME} Qt5::Widgets)
 endif()
 
-target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_SOURCE_DIR}/clash/)
+target_include_directories(${PROJECT_NAME} PUBLIC
+    ${CMAKE_SOURCE_DIR}/clash/
+    helpers)
 
 target_compile_definitions(${PROJECT_NAME}
     PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)
