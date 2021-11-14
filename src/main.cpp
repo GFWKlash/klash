@@ -25,6 +25,7 @@
 #include <iostream>
 
 #include <ClashCoreHelper.h>
+#include <KlashRedirectLog.h>
 
 #define KLASH_URI "org.maui.klash"
 
@@ -64,6 +65,10 @@ int main(int argc, char *argv[])
 
     about.processCommandLine(&parser);
     const QStringList args = parser.positionalArguments();
+
+    // Redirect logs
+    KlashRedirectLog logRedirector;
+    logRedirector.enableRedirect();
 
     // Init clash core
     bool clashRunning = false;

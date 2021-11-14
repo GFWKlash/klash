@@ -6,6 +6,7 @@
 set(klash_SRCS
     main.cpp
     helpers/ClashCoreHelper.cpp
+    log/KlashRedirectLog.cpp
 )
 
 set(klash_ASSETS
@@ -40,6 +41,7 @@ endif()
 
 target_include_directories(${PROJECT_NAME} PUBLIC
     ${CMAKE_SOURCE_DIR}/clash/
+    log
     helpers)
 
 target_compile_definitions(${PROJECT_NAME}
