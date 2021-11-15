@@ -5,6 +5,7 @@ import "C"
 
 import (
 	"github.com/Dreamacro/clash/log"
+	"github.com/Dreamacro/clash/tunnel/statistic"
 )
 
 var (
@@ -46,4 +47,25 @@ func redirectLogToKlash() {
 //export stopRedirectLogToKlash
 func stopRedirectLogToKlash() {
 	enableRedirect = false
+}
+
+//export getRealtimeTrafficStatistic
+func getRealtimeTrafficStatistic(upload, download *C.uint64_t) {
+	up, down := statistic.DefaultManager.Now()
+
+	*upload = C.uint64_t(up)
+	*download = C.uint64_t(down)
+}
+
+//export getTotalTrafficStatistic
+func getTotalTrafficStatistic(upload, download *C.uint64_t) {
+	snapshot := statistic.DefaultManager.Snapshot()
+
+	*upload = C.uint64_t(snapshot.UploadTotal)
+	*download = C.uint64_t(snapshot.DownloadTotal)
+}
+
+//export resetTrafficStatistic
+func resetTrafficStatistic() {
+	statistic.DefaultManager.ResetStatistic()
 }
