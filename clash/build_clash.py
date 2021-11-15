@@ -6,7 +6,10 @@ def get_version():
     with open('./go.mod') as file:
         for line in file.readlines():
             if "clash" in line and "klash" not in line:
-                return line.split("-")[-1].strip()[:6]
+                version_string = line.split(" ")[-1].strip()
+                tag_string = version_string.split("-")[0].strip()
+                commit_string = version_string.split("-")[-1].strip()[:6]
+                return "{}-{}".format(tag_string, commit_string)
     return "unknown"
 
 def get_full_version():

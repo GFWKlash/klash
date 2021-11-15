@@ -18,6 +18,7 @@ import (
 	"github.com/Dreamacro/clash/log"
 	"github.com/oschwald/geoip2-golang"
 	"github.com/phayes/freeport"
+	ClashConstant "github.com/Dreamacro/clash/constant"
 )
 
 func isAddrValid(addr string) bool {
@@ -212,6 +213,11 @@ func verifyGEOIPDataBase() bool {
 		return false
 	}
 	return true
+}
+
+//export getClashVersion
+func getClashVersion() *C.char {
+	return C.CString(ClashConstant.Version)
 }
 
 func main() {
