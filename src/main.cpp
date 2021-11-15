@@ -47,6 +47,13 @@ int main(int argc, char *argv[])
 
     MauiApp::instance ()->setIconName ("qrc:/assets/logo.png");
 
+    // Prepare clash version
+    char *clashVersionString = getClashVersion();
+    QString qClashVersionString("clash ");
+    qClashVersionString += clashVersionString;
+    qDebug() << "[Clash] Core version " << clashVersionString;
+    free(clashVersionString);
+
     KLocalizedString::setApplicationDomain("klash");
     KAboutData about(QStringLiteral("klash"), i18n("Klash"), KLASH_VERSION_STRING, i18n("A Clash frontend."), KAboutLicense::LGPL_V3, i18n("© 2021-%1 Maui Development Team", QString::number(QDate::currentDate().year())), QString(GIT_BRANCH) + "/" + QString(GIT_COMMIT_HASH));
     about.addAuthor(i18n("GFWK"), i18n("Developer"), QStringLiteral("gofuwako@gmail.com"));
@@ -55,6 +62,7 @@ int main(int argc, char *argv[])
     about.setBugAddress("https://github.com/GFWKlash/klash/issues");
     about.setOrganizationDomain(KLASH_URI);
     about.setProgramLogo(app.windowIcon());
+    about.setOtherText(qClashVersionString);
 
     KAboutData::setApplicationData(about);
 
