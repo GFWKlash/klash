@@ -69,3 +69,8 @@ func getTotalTrafficStatistic(upload, download *C.uint64_t) {
 func resetTrafficStatistic() {
 	statistic.DefaultManager.ResetStatistic()
 }
+
+//export getConfigLogLevel
+func getConfigLogLevel(level *C.int32_t) {
+	getConfigLogLevelImpl(level)
+}
