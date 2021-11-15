@@ -74,3 +74,8 @@ func resetTrafficStatistic() {
 func getConfigLogLevel(level *C.int32_t) {
 	getConfigLogLevelImpl(level)
 }
+
+//export setConfigLogLevel
+func setConfigLogLevel(level *C.int32_t) bool {
+	return setConfigLogLevelImpl(level)
+}

@@ -9,6 +9,7 @@ import (
 	P "github.com/Dreamacro/clash/listener"
 	"github.com/Dreamacro/clash/tunnel"
 	"github.com/Dreamacro/clash/component/resolver"
+	"github.com/Dreamacro/clash/log"
 )
 
 var (
@@ -271,12 +272,21 @@ func setConfigTunnelMode(mode *C.int32_t) bool {
 	return false
 }
 
-/*
-TODO: Set log level
 func setConfigLogLevelImpl(level *C.int32_t) bool {
 	lazyLoadGeneralConfig()
+	levelEnum := log.LogLevel(int(*level))
+	if cachedConfig != nil {
+		if cachedConfig.LogLevel != levelEnum {
+			log.SetLevel(levelEnum)
+			forceUpdateGeneralConfig()
+			return true
+		}
+	} else {
+		// Force set and ignore the result
+		log.SetLevel(levelEnum)
+	}
+	return false
 }
-*/
 
 //export setConfigEnableIPv6
 func setConfigEnableIPv6(enabled *C.int32_t) bool {
