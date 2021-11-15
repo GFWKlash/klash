@@ -6,6 +6,9 @@ import "C"
 import (
 	"github.com/Dreamacro/clash/hub/executor"
 	"github.com/Dreamacro/clash/config"
+	P "github.com/Dreamacro/clash/listener"
+	"github.com/Dreamacro/clash/tunnel"
+	"github.com/Dreamacro/clash/component/resolver"
 )
 
 var (
@@ -13,6 +16,7 @@ var (
 	cachedConfig *config.General = nil
 )
 
+//export forceUpdateGeneralConfig
 func forceUpdateGeneralConfig() {
 	cachedConfig = executor.GetGeneral()
 }
@@ -136,3 +140,191 @@ Inbound: config.Inbound{
 	Authentication: authenticator,
 },
 */
+
+func notZeroOrDefault(p int, def int) int {
+	if p != 0 {
+		return p
+	}
+
+	return def
+}
+
+//export setConfigHTTPPort
+func setConfigHTTPPort(port *C.uint16_t) bool {
+	lazyLoadGeneralConfig()
+	portInt := int(*port)
+
+	ports := P.GetPorts()
+	tcpIn := tunnel.TCPIn()
+	if cachedConfig != nil {
+		if cachedConfig.Inbound.Port == portInt {
+			P.ReCreateHTTP(notZeroOrDefault(portInt, ports.Port), tcpIn)
+			forceUpdateGeneralConfig()
+			return true
+		}
+	} else {
+		// Force set and ignore the result
+		P.ReCreateHTTP(notZeroOrDefault(portInt, ports.Port), tcpIn)
+	}
+	return false
+}
+
+//export setConfigSocksPort
+func setConfigSocksPort(port *C.uint16_t) bool {
+	lazyLoadGeneralConfig()
+	portInt := int(*port)
+
+	ports := P.GetPorts()
+	tcpIn := tunnel.TCPIn()
+	udpIn := tunnel.UDPIn()
+	if cachedConfig != nil {
+		if cachedConfig.Inbound.SocksPort == portInt {
+			P.ReCreateSocks(notZeroOrDefault(portInt, ports.SocksPort), tcpIn, udpIn)
+			forceUpdateGeneralConfig()
+			return true
+		}
+	} else {
+		// Force set and ignore the result
+		P.ReCreateSocks(notZeroOrDefault(portInt, ports.SocksPort), tcpIn, udpIn)
+	}
+	return false
+}
+
+
+//export setConfigRedirPort
+func setConfigRedirPort(port *C.uint16_t) bool {
+	lazyLoadGeneralConfig()
+	portInt := int(*port)
+
+	ports := P.GetPorts()
+	tcpIn := tunnel.TCPIn()
+	udpIn := tunnel.UDPIn()
+	if cachedConfig != nil {
+		if cachedConfig.Inbound.RedirPort == portInt {
+			P.ReCreateRedir(notZeroOrDefault(portInt, ports.RedirPort), tcpIn, udpIn)
+			forceUpdateGeneralConfig()
+			return true
+		}
+	} else {
+		// Force set and ignore the result
+		P.ReCreateRedir(notZeroOrDefault(portInt, ports.RedirPort), tcpIn, udpIn)
+	}
+	return false
+}
+
+//export setConfigTProxyPort
+func setConfigTProxyPort(port *C.uint16_t) bool {
+	lazyLoadGeneralConfig()
+	portInt := int(*port)
+
+	ports := P.GetPorts()
+	tcpIn := tunnel.TCPIn()
+	udpIn := tunnel.UDPIn()
+	if cachedConfig != nil {
+		if cachedConfig.Inbound.TProxyPort == portInt {
+			P.ReCreateTProxy(notZeroOrDefault(portInt, ports.TProxyPort), tcpIn, udpIn)
+			forceUpdateGeneralConfig()
+			return true
+		}
+	} else {
+		// Force set and ignore the result
+		P.ReCreateTProxy(notZeroOrDefault(portInt, ports.TProxyPort), tcpIn, udpIn)
+	}
+	return false
+}
+
+//export setConfigMixedPort
+func setConfigMixedPort(port *C.uint16_t) bool {
+	lazyLoadGeneralConfig()
+	portInt := int(*port)
+
+	ports := P.GetPorts()
+	tcpIn := tunnel.TCPIn()
+	udpIn := tunnel.UDPIn()
+	if cachedConfig != nil {
+		if cachedConfig.Inbound.MixedPort == portInt {
+			P.ReCreateMixed(notZeroOrDefault(portInt, ports.MixedPort), tcpIn, udpIn)
+			forceUpdateGeneralConfig()
+			return true
+		}
+	} else {
+		// Force set and ignore the result
+		P.ReCreateMixed(notZeroOrDefault(portInt, ports.MixedPort), tcpIn, udpIn)
+	}
+	return false
+}
+
+//export setConfigTunnelMode
+func setConfigTunnelMode(mode *C.int32_t) bool {
+	lazyLoadGeneralConfig()
+	modeEnum := tunnel.TunnelMode(int(*mode))
+	if cachedConfig != nil {
+		if cachedConfig.Mode != modeEnum {
+			tunnel.SetMode(modeEnum)
+			forceUpdateGeneralConfig()
+			return true
+		}
+	} else {
+		// Force set and ignore the result
+		tunnel.SetMode(modeEnum)
+	}
+	return false
+}
+
+/*
+TODO: Set log level
+func setConfigLogLevelImpl(level *C.int32_t) bool {
+	lazyLoadGeneralConfig()
+}
+*/
+
+//export setConfigEnableIPv6
+func setConfigEnableIPv6(enabled *C.int32_t) bool {
+	lazyLoadGeneralConfig()
+	enabledBool := (int(*enabled) != 0)
+	if cachedConfig != nil {
+		if cachedConfig.IPv6 != enabledBool {
+			resolver.DisableIPv6 = !enabledBool
+			cachedConfig.IPv6 = enabledBool
+			return true
+		}
+	} else {
+		// Force set and ignore the result
+		resolver.DisableIPv6 = !enabledBool
+	}
+	return false
+}
+
+//export setConfigAllowLan
+func setConfigAllowLan(allowed *C.int32_t) bool {
+	lazyLoadGeneralConfig()
+	allowedBool := (int(*allowed) != 0)
+	if cachedConfig != nil {
+		if cachedConfig.AllowLan != allowedBool {
+			P.SetAllowLan(allowedBool)
+			forceUpdateGeneralConfig()
+			return true
+		}
+	} else {
+		// Force set and ignore the result
+		P.SetAllowLan(allowedBool)
+	}
+	return false
+}
+
+//export setConfigBoundAddress
+func setConfigBoundAddress(addr *C.char) bool {
+	lazyLoadGeneralConfig()
+	addrString := C.GoString(addr)
+	if cachedConfig != nil {
+		if cachedConfig.BindAddress != addrString {
+			P.SetBindAddress(addrString)
+			forceUpdateGeneralConfig()
+			return true
+		}
+	} else {
+		// Force set and ignore the result
+		P.SetBindAddress(C.GoString(addr))
+	}
+	return false
+}
