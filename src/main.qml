@@ -63,13 +63,6 @@ Maui.ApplicationWindow
                         _stackViewTitle.text = i18n("Settings")
                     }
                 }
-
-                MenuItem
-                {
-                    text: i18n("About")
-                    icon.name: "documentinfo"
-                    onTriggered: root.about()
-                }
             }
 
             headBar.rightContent: [
