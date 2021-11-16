@@ -100,3 +100,5 @@ func getRuleProxyAt(cIndex *C.uint64_t) *C.char {
 	return C.CString("")
 }
 
+// TODO: delete a rule
+// TODO: add a rule
