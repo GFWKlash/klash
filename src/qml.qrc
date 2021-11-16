@@ -2,5 +2,6 @@
     <qresource prefix="/">
         <file>main.qml</file>
         <file>views/MainView.qml</file>
+        <file>views/DesktopSidebar.qml</file>
     </qresource>
 </RCC>

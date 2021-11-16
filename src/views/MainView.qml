@@ -11,6 +11,9 @@ Maui.Page
 {
     id: control
 
+    // Show headbar when the sidebar is collapsed
+    headBar.visible: !root.isWide
+
     Text {
         text: "Hello Klash"
     }

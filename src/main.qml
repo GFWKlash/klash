@@ -15,72 +15,80 @@ Maui.ApplicationWindow
     // Disable header bar
     headBar.visible: false
 
-    property bool selectionMode: false
-
-    MainView
+    sideBar: DesktopSidebar
     {
-        id: mainView
+        id: desktopSidebar
+    }
+
+    StackView
+    {
+        id: _stackView
         anchors.fill: parent
-        showCSDControls: true
-
-        headBar.forceCenterMiddleContent: false
-
-        headBar.leftContent: Maui.ToolButtonMenu
+        initialItem: MainView
         {
-            icon.name: "application-menu"
-
-            MenuItem
-            {
-                text: i18n("Settings")
-                icon.name: "settings-configure"
-            }
-
-            MenuItem
-            {
-                text: i18n("About")
-                icon.name: "documentinfo"
-                onTriggered: root.about()
-            }
-        }
-
-        headBar.rightContent: [
-
-            // TODO: Run clash core button
-            ToolButton
-            {
-                icon.name: "list-add"
-                onClicked:
-                {
-                }
-            },
-            // TODO: Add profile button
-            ToolButton
-            {
-                icon.name: "list-add"
-                onClicked:
-                {
-                }
-            },
-            // TODO: Import profile button
-            ToolButton
-            {
-                icon.name: "list-add"
-                onClicked:
-                {
-                }
-            }
-        ]
-
-        headBar.middleContent: RowLayout
-        {
+            id: mainView
             anchors.fill: parent
-            spacing: 2
-            Layout.fillWidth: true
-            Layout.maximumWidth: 500
-            Layout.minimumWidth: 0
+            showCSDControls: true
 
-            Text {
-                text: i18n("Profiles")
+            headBar.leftContent: Maui.ToolButtonMenu
+            {
+                icon.name: "application-menu"
+
+                MenuItem
+                {
+                    text: i18n("Home")
+                    icon.name: "home"
+                    onTriggered:
+                    {
+                        _stackViewTitle.text = i18n("Home")
+                    }
+                }
+
+                MenuItem
+                {
+                    text: i18n("Data")
+                    icon.name: "dashboard-show"
+                    onTriggered:
+                    {
+                        _stackViewTitle.text = i18n("Data")
+                    }
+                }
+
+                MenuItem
+                {
+                    text: i18n("Settings")
+                    icon.name: "settings-configure"
+                    onTriggered:
+                    {
+                        _stackViewTitle.text = i18n("Settings")
+                    }
+                }
+
+                MenuItem
+                {
+                    text: i18n("About")
+                    icon.name: "documentinfo"
+                    onTriggered: root.about()
+                }
+            }
+
+            headBar.rightContent: [
+                // TODO: Run clash core button
+                // TODO: Add profile button
+                // TODO: Import profile button
+            ]
+
+            headBar.middleContent: RowLayout
+            {
+                spacing: 2
+                Layout.fillWidth: true
+                Layout.maximumWidth: 500
+                Layout.minimumWidth: 0
+
+                Text {
+                    id: _stackViewTitle
+                    text: i18n("Home")
+                }
             }
         }
     }
