@@ -85,9 +85,18 @@ Maui.ApplicationWindow
                 Layout.maximumWidth: 500
                 Layout.minimumWidth: 0
 
-                Text {
-                    id: _stackViewTitle
-                    text: i18n("Home")
+                RowLayout
+                {
+                    Image {
+                        sourceSize.height: Maui.Style.iconSizes.big
+                        sourceSize.width: Maui.Style.iconSizes.big
+                        source: "qrc:/assets/logo.png"
+                    }
+
+                    Text {
+                        id: _stackViewTitle
+                        text: i18n("Home")
+                    }
                 }
             }
         }
