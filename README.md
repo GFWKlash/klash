@@ -88,3 +88,41 @@ The executable is under `build/bin`. Run it in the `build` directory:
 ```bash
 bin/klash
 ```
+
+# Build on macOS
+
+Follow the [instructions](https://community.kde.org/Guidelines_and_HOWTOs/Build_from_source/Mac#Installation_using_Craft) to install KDE Craft. Enter Craft environment:
+
+```sh
+source <craft-root-dir>/craft/craftenv.sh
+```
+
+## Install Qt on macOS
+
+Notice, it is recommended to install prebuilt Qt from Craft instead of compiling all from scratch. To do this, append `self.defaultTarget = '5.13.2'` at the end of `setTargets` in `etc/blueprints/craft-blueprints-kde/libs/qt5/qtbase/qtbase.py`.
+
+Then, in Craft env, run:
+
+```sh
+craft -i qtbase
+```
+
+## Install Kirigami and Mauikit on macOS
+
+Install Kirigami, and the dependencies will be installed automatically:
+
+```sh
+craft -i kirigami
+```
+
+Change Kirigami build target in `etc/blueprints/craft-blueprints-kde/kde/maui/mauikit/mauikit.py`, from `self.defaultTarget = '2.1.0'` to `self.defaultTarget = 'master'`.
+
+Then:
+
+```sh
+craft -i mauikit mauikit-filebrowsing
+```
+
+## Build Klash on macOS
+
+Under the project dir, follow the [instructions](#build-this-project) with the Craft environment.
