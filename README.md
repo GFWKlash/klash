@@ -21,7 +21,7 @@ Install mauikit from the pacman package manger:
 sudo pacman -S mauikit mauikit-filebrowsing
 ```
 
-If the version provided by the package manager does not work, you need to build mauikit by yourself. Otherwise, jump to [Build Clash core](#Build Clash core).
+If the version provided by the package manager does not work, you need to build mauikit by yourself. Otherwise, jump to [Build Clash core](#build_clash_core).
 
 ## Build mauikit(optionally)
 
